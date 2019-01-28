@@ -31,7 +31,26 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         this.chibi1.update();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
+            int x=  (int)event.getX();
+            int y = (int)event.getY();
+            chibi1.setVectorX(x);
+            chibi1.setVectorY(y);
+            int movingVectorX =x-  this.chibi1.getX() ;
+            int movingVectorY =y-  this.chibi1.getY() ;
+
+            this.chibi1.setMovingVector(movingVectorX,movingVectorY);
+            return true;
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void draw(Canvas canvas)  {
@@ -62,15 +81,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry= true;
         while(retry) {
-            try {
+            //try {
                 this.gameThread.setRunning(false);
-
                 // Parent thread must wait until the end of GameThread.
-                this.gameThread.join();
-            }catch(InterruptedException e)  {
-                e.printStackTrace();
-            }
-            retry= true;
+                //this.gameThread.join();
+
+            retry= false;
         }
     }
 

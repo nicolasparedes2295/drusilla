@@ -11,7 +11,7 @@ public class ChibiCharacter extends GameObject {
     private static final int ROW_BOTTOM_TO_TOP = 3;
 
     // Row index of Image are being used.
-    private int rowUsing = ROW_LEFT_TO_RIGHT;
+    private int rowUsing = ROW_BOTTOM_TO_TOP;
 
     private int colUsing;
 
@@ -23,10 +23,20 @@ public class ChibiCharacter extends GameObject {
     // Velocity of game character (pixel/millisecond)
     public static final float VELOCITY = 0.1f;
 
-    private int movingVectorX = 10;
-    private int movingVectorY = 5;
+    private int movingVectorX = 0;
+    private int movingVectorY = 0;
+    private int vectorX=0;
 
-    private long lastDrawNanoTime =-2;
+    public void setVectorX(int vectorX) {
+        this.vectorX = vectorX;
+    }
+
+    public void setVectorY(int vectorY) {
+        this.vectorY = vectorY;
+    }
+
+    private int vectorY=0;
+    private long lastDrawNanoTime =-1;
 
     private GameSurface gameSurface;
 
@@ -68,9 +78,13 @@ public class ChibiCharacter extends GameObject {
         return bitmaps[this.colUsing];
     }
 
-
     public void update()  {
-        this.colUsing++;
+        int betweenX = vectorX-x;
+        int betweenY = vectorY-y;
+        boolean a=movingVectorX!=0&&movingVectorY!=0;
+        boolean b=!isBetween(betweenX,-15,15)&&!isBetween(betweenY,-15,15);
+        if (a&&b){
+        this.colUsing++;}
         if(colUsing >= this.colCount)  {
             this.colUsing =0;
         }
@@ -90,9 +104,17 @@ public class ChibiCharacter extends GameObject {
         double movingVectorLength = Math.sqrt(movingVectorX* movingVectorX + movingVectorY*movingVectorY);
 
         // Calculate the new position of the game character.
-        this.x = x +  (int)(distance* movingVectorX / movingVectorLength);
-        this.y = y +  (int)(distance* movingVectorY / movingVectorLength);
-
+       /* System.out.print("Valor x= " + x + "|");
+        System.out.println("Valor y= " + y);
+        System.out.print("Valor vector x= " + vectorX + "|");
+        System.out.print("Valor vector y= " + vectorY);
+        System.out.println("Valor dif x= " + betweenX);
+        System.out.print("Valor dif y= " + betweenY);
+            */
+            if(!isBetween(betweenX,-15,15)&&!isBetween(betweenY,-15,15)) {
+                this.x = x + (int) (distance * movingVectorX / movingVectorLength);
+                this.y = y + (int) (distance * movingVectorY / movingVectorLength);
+            }
         // When the game's character touches the edge of the screen, then change direction
 
         if(this.x < 0 )  {
@@ -141,5 +163,8 @@ public class ChibiCharacter extends GameObject {
     public void setMovingVector(int movingVectorX, int movingVectorY)  {
         this.movingVectorX= movingVectorX;
         this.movingVectorY = movingVectorY;
+    }
+    public static boolean isBetween(int x, int lower, int upper) {
+        return lower <= x && x <= upper;
     }
 }
