@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import org.drussila.R;
+import org.drussila.models.character.ChibiCharacter;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 

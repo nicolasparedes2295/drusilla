@@ -1,7 +1,10 @@
-package org.drussila.models;
+package org.drussila.models.character;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import org.drussila.models.GameObject;
+import org.drussila.models.GameSurface;
 
 public class ChibiCharacter extends GameObject {
 
@@ -103,14 +106,6 @@ public class ChibiCharacter extends GameObject {
 
         double movingVectorLength = Math.sqrt(movingVectorX* movingVectorX + movingVectorY*movingVectorY);
 
-        // Calculate the new position of the game character.
-       /* System.out.print("Valor x= " + x + "|");
-        System.out.println("Valor y= " + y);
-        System.out.print("Valor vector x= " + vectorX + "|");
-        System.out.print("Valor vector y= " + vectorY);
-        System.out.println("Valor dif x= " + betweenX);
-        System.out.print("Valor dif y= " + betweenY);
-            */
             if(!isBetween(betweenX,-15,15)&&!isBetween(betweenY,-15,15)) {
                 this.x = x + (int) (distance * movingVectorX / movingVectorLength);
                 this.y = y + (int) (distance * movingVectorY / movingVectorLength);
@@ -164,6 +159,7 @@ public class ChibiCharacter extends GameObject {
         this.movingVectorX= movingVectorX;
         this.movingVectorY = movingVectorY;
     }
+
     public static boolean isBetween(int x, int lower, int upper) {
         return lower <= x && x <= upper;
     }
