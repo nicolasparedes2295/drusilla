@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import org.drussila.models.GameObject;
 import org.drussila.models.GameSurface;
 
-public class ChibiCharacter extends GameObject {
+public class MainCharacter extends GameObject {
 
     private static final int ROW_TOP_TO_BOTTOM = 0;
     private static final int ROW_RIGHT_TO_LEFT = 1;
@@ -15,7 +15,7 @@ public class ChibiCharacter extends GameObject {
 
     // Row index of Image are being used.
     private int rowUsing = ROW_BOTTOM_TO_TOP;
-
+    private Character character;
     private int colUsing;
 
     private Bitmap[] leftToRights;
@@ -29,23 +29,15 @@ public class ChibiCharacter extends GameObject {
     private int movingVectorX = 0;
     private int movingVectorY = 0;
     private int vectorX=0;
-
-    public void setVectorX(int vectorX) {
-        this.vectorX = vectorX;
-    }
-
-    public void setVectorY(int vectorY) {
-        this.vectorY = vectorY;
-    }
-
     private int vectorY=0;
+
     private long lastDrawNanoTime =-1;
 
     private GameSurface gameSurface;
 
-    public ChibiCharacter(GameSurface gameSurface, Bitmap image, int x, int y) {
+    public MainCharacter(GameSurface gameSurface, Bitmap image, int x, int y) {
         super(image, 4, 3, x, y);
-
+        character = new Character(10,15,10,10,10,10);
         this.gameSurface= gameSurface;
 
         this.topToBottoms = new Bitmap[colCount]; // 3
@@ -100,16 +92,24 @@ public class ChibiCharacter extends GameObject {
         }
         // Change nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
         int deltaTime = (int) ((now - lastDrawNanoTime)/ 1000000 );
-
+        System.out.println("Valor x= " + x + "|");
+        System.out.print("Valor y= " + y);
+        System.out.println("Valor vector x= " + vectorX + "|");
+        System.out.print("Valor vector y= " + vectorY);
+        System.out.println("Valor dif x= " + betweenX);
+        System.out.print("Valor dif y= " + betweenY);
         // Distance moves
         float distance = VELOCITY * deltaTime;
-
         double movingVectorLength = Math.sqrt(movingVectorX* movingVectorX + movingVectorY*movingVectorY);
+        int oldx=x;
+        int oldy=y;
+        if(!isBetween(betweenX,-15,15)&&!isBetween(betweenY,-15,15)) {
+            this.x = x + (int) (distance * movingVectorX / movingVectorLength);
+            this.y = y + (int) (distance * movingVectorY / movingVectorLength);
+        }
 
-            if(!isBetween(betweenX,-15,15)&&!isBetween(betweenY,-15,15)) {
-                this.x = x + (int) (distance * movingVectorX / movingVectorLength);
-                this.y = y + (int) (distance * movingVectorY / movingVectorLength);
-            }
+        character.setHealth(DescreaseHealthEfect(this.character.getHealth(),1,oldx,oldy));
+
         // When the game's character touches the edge of the screen, then change direction
 
         if(this.x < 0 )  {
@@ -162,5 +162,21 @@ public class ChibiCharacter extends GameObject {
 
     public static boolean isBetween(int x, int lower, int upper) {
         return lower <= x && x <= upper;
+    }
+
+    public Double DescreaseHealthEfect(Double health, int powerEffect, int x, int y){
+
+        if(this.x!=x || this.y!=y) {
+            health = health - (powerEffect*0.01);
+        }
+
+        return health;
+    }
+    public void setVectorX(int vectorX) {
+        this.vectorX = vectorX;
+    }
+
+    public void setVectorY(int vectorY) {
+        this.vectorY = vectorY;
     }
 }

@@ -9,14 +9,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import org.drussila.R;
-import org.drussila.models.character.ChibiCharacter;
+import org.drussila.models.character.MainCharacter;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private GameThread gameThread;
 
-    private ChibiCharacter chibi1;
+    private MainCharacter chibi1;
 
     public GameSurface(Context context)  {
         super(context);
@@ -64,7 +64,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Bitmap chibiBitmap1 = BitmapFactory.decodeResource(this.getResources(), R.drawable.ctejh1);
-        this.chibi1 = new ChibiCharacter(this,chibiBitmap1,getWidth()/2,getHeight()/2);
+        this.chibi1 = new MainCharacter(this,chibiBitmap1,getWidth()/2,getHeight()/2);
 
         this.gameThread = new GameThread(this,holder);
         this.gameThread.setRunning(true);

@@ -3,50 +3,59 @@ package org.drussila.models.character;
 import java.util.HashMap;
 
 public class Character {
-    private int strength;
-    private int constitution;
-    private int dexterity;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
-    private int STR=mod_formula(strength);
-    private int CON=mod_formula(constitution);
-    private int DEX=mod_formula(dexterity;
-    private int INT=mod_formula(intelligence);
-    private int WIS=mod_formula(wisdom);
-    private int CHA=mod_formula(charisma);
-    private int health = 10+CON;
-    
-    public Character(int strength, int constitution, int dexterity, int intelligence, int wisdom, int charisma) {
-        this.STR = strength;
-        this.CON = constitution;
-        this.DEX = dexterity;
-        this.INT = intelligence;
-        this.WIS = wisdom;
-        this.CHA = charisma;
+    private Integer strength;
+    private Integer constitution;
+    private Integer dexterity;
+    private Integer intelligence;
+    private Integer wisdom;
+    private Integer charisma;
+    private Integer STR;
+    private Integer CON;
+    private Integer DEX;
+    private Integer INT;
+    private Integer WIS;
+    private Integer CHA;
+    private Double health;
+
+    public void setHealth(Double health) {
+        this.health = health;
     }
 
-    public int getStrength() {
+    public Double getHealth() {
+        return health;
+    }
+
+    public Character(int strength, int constitution, int dexterity, int intelligence, int wisdom, int charisma) {
+        STR=mod_formula(strength);
+        CON=mod_formula(constitution);
+        DEX=mod_formula(dexterity);
+        INT=mod_formula(intelligence);
+        WIS=mod_formula(wisdom);
+        CHA=mod_formula(charisma);
+        health = (double) 10+CON;
+    }
+
+    public Integer getStrength() {
         return strength;
     }
 
-    public int getConstitution() {
+    public Integer getConstitution() {
         return constitution;
     }
 
-    public int getDexterity() {
+    public Integer getDexterity() {
         return dexterity;
     }
 
-    public int getIntelligence() {
+    public Integer getIntelligence() {
         return intelligence;
     }
 
-    public int getWisdom() {
+    public Integer getWisdom() {
         return wisdom;
     }
 
-    public int getCharisma() {
+    public Integer getCharisma() {
         return charisma;
     }
 
@@ -74,7 +83,7 @@ public class Character {
         this.charisma = charisma;
     }
 
-    private int mod_formula(int value){
+    private Integer mod_formula(int value){
         HashMap<Integer, Integer> modMap = new HashMap<Integer, Integer>();
         modMap.put(1,-5);
         modMap.put(1,-4);
