@@ -16,6 +16,20 @@ public class Character {
     private Integer WIS;
     private Integer CHA;
     private Double health;
+    private boolean isDeath=false;
+    private boolean isRunning=false;
+
+    public boolean isRunning() { return isRunning; }
+
+    public void setRunning(boolean running) { isRunning = running; }
+
+    public boolean isDeath() {
+        return isDeath;
+    }
+
+    public void setDeath(boolean death) {
+        isDeath = death;
+    }
 
     public void setHealth(Double health) {
         this.health = health;
